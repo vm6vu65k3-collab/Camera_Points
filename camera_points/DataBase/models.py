@@ -5,6 +5,7 @@ from sqlalchemy.dialects.mysql import DECIMAL
 from camera_points.DataBase.database import Base
 
 class EtlStatus(enum.Enum):
+    RUNNING = "running"
     SUCCESS = "success"
     FAILED  = "failed"
 
@@ -53,8 +54,6 @@ class CameraPoints(BaseModel):
     city_name   = Column(String(10),   nullable = False, comment = "設置縣市")
     region_name = Column(String(20),  nullable = False, comment = "設置市區鄉鎮")
     address     = Column(String(100),  nullable = False, comment = "設置地點")
-    dept_name   = Column(String(50),  nullable = False, comment = "管轄警局")
-    branch_name = Column(String(50),  nullable = False, comment = "管轄分局")
     longitude   = Column(DECIMAL(10, 7),  nullable = False, comment = "經度")
     latitude    = Column(DECIMAL(10, 7),  nullable = False, comment = "緯度")
     direct      = Column(String(20),   nullable = False, comment = "拍攝方向")
@@ -75,8 +74,6 @@ class CameraPoints(BaseModel):
             f"city_name = {self.city_name!r},"
             f"region_name = {self.region_name!r},"
             f"address = {self.address!r},"
-            f"dept_name = {self.dept_name!r},"
-            f"branch_name = {self.branch_name!r},"
             f"longitude = {self.longitude!r},"
             f"latitude = {self.latitude!r},"
             f"direct = {self.direct!r},"
@@ -88,7 +85,7 @@ class ETLRuns(BaseModel):
     __tablename__ = "etl_runs"
 
     started_at  = Column(TIMESTAMP, nullable = False, comment = "開始時間")
-    finished_at = Column(TIMESTAMP, nullable = False, comment = "結束時間")
+    finished_at = Column(TIMESTAMP, nullable = True, comment = "結束時間")
     status      = Column(
         Enum(
             EtlStatus,
