@@ -1,0 +1,20 @@
+# venv
+.venv/
+
+# raw_datas
+raw_datas/
+
+# __pycache__
+__pycache__/
+
+# certs
+.certs/
+
+# macOS
+.DS_Store
+
+# env
+.env
+
+# csv
+.csv
