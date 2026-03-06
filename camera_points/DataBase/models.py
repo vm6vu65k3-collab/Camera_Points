@@ -1,7 +1,7 @@
 import enum
-from sqlalchemy import (Column, String, Integer, Boolean, TIMESTAMP, 
+from sqlalchemy import (Column, String, Integer, Boolean, 
                         ForeignKey, Enum, text, UniqueConstraint, CheckConstraint)
-from sqlalchemy.dialects.mysql import DECIMAL
+from sqlalchemy.dialects.mysql import DECIMAL, TIMESTAMP
 from camera_points.DataBase.database import Base
 
 class EtlStatus(enum.Enum):
@@ -84,8 +84,8 @@ class CameraPoints(BaseModel):
 class ETLRuns(BaseModel):
     __tablename__ = "etl_runs"
 
-    started_at  = Column(TIMESTAMP, nullable = False, comment = "開始時間")
-    finished_at = Column(TIMESTAMP, nullable = True, comment = "結束時間")
+    started_at  = Column(TIMESTAMP(fsp = 6), nullable = False, comment = "開始時間")
+    finished_at = Column(TIMESTAMP(fsp = 6), nullable = True, comment = "結束時間")
     status      = Column(
         Enum(
             EtlStatus,
